@@ -197,15 +197,17 @@ class _HomePageState extends State<HomePage> {
                   child: const Text('계산하기'),
                 ),
                 const SizedBox(height: 30),
-                if (intervals.isNotEmpty && gapLength >= 0)
+                // if (intervals.isNotEmpty && gapLength >= 0)
                   Expanded(
                     child: ListView.separated(
                       itemBuilder: (context, index) {
-                        print('아이템빌더');
+                        final item = intervals[index];
+                        print('아이템빌더: $item ($index), ${Theme.of(context).textTheme.titleLarge}');
                         return Text(
-                          intervals[index],
+                          item,
+                          // key: Key(item),
                           textAlign: TextAlign.center,
-                          style: Theme.of(orginalContext).textTheme.titleLarge,
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(),
                           overflow: TextOverflow.ellipsis,
                         );
                       },
@@ -218,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               textAlign: TextAlign.center,
                               '+ ${gapLength.toStringAsFixed(2)}',
-                              style: Theme.of(orginalContext)
+                              style: Theme.of(context2)
                                   .textTheme
                                   .bodyMedium!
                                   .copyWith(color: Colors.grey),
