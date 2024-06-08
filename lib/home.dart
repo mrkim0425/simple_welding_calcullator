@@ -200,15 +200,18 @@ class _HomePageState extends State<HomePage> {
                 // if (intervals.isNotEmpty && gapLength >= 0)
                   Expanded(
                     child: ListView.separated(
-                      itemBuilder: (context, index) {
+                      itemBuilder: (itemBuilderContext, index) {
                         final item = intervals[index];
-                        print('아이템빌더: $item ($index), ${Theme.of(context).textTheme.titleLarge}');
-                        return Text(
-                          item,
-                          // key: Key(item),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(),
-                          overflow: TextOverflow.ellipsis,
+                        return Builder(
+                          builder: (context) {
+                            return Text(
+                              item,
+                              // key: Key(item),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleLarge,
+                              overflow: TextOverflow.ellipsis,
+                            );
+                          }
                         );
                       },
                       separatorBuilder: (context2, index) {
