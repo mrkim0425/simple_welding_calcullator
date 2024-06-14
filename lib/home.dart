@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simple_welding_calcullator/main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,19 +8,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  AppBar _appBar() => AppBar(
-          title: const Text('Theme Dependency Sample'),
-          centerTitle: true,
-          actions: [
-            ValueListenableBuilder(
-                valueListenable: isDark,
-                builder: (context, value, _) => IconButton(
-                      onPressed: changeTheme,
-                      icon: value
-                          ? const Icon(Icons.sunny)
-                          : const Icon(Icons.nightlight_round_outlined),
-                    ))
-          ]);
+  AppBar _appBar() =>
+      AppBar(title: const Text('Theme Dependency Sample'), centerTitle: true);
 
   @override
   Widget build(BuildContext originalContext) {

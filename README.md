@@ -1,16 +1,19 @@
-# simple_welding_calcullator
+# Dependent on Theme in ListView.builder Sample
 
-A new Flutter project.
+In `ListView.builder`, 
 
-## Getting Started
+the widget dependent on `ThemeData` with `Theme.of(context)` 
 
-This project is a starting point for a Flutter application.
+cannot be rebuilt using the `BuildContext` provided by `itemBuilder`.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+see [lib/home.dart](./lib/home.dart).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## The Way to Reproduce This Issue(?)
+
+1. Run this app
+2. change your system theme mode.
+
+## Tested on ...
+
+flutter 3.19.6 & 3.22.0
