@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
         valueListenable: isDark,
         builder: (context, value, _) {
           return MaterialApp(
-            title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
             themeMode: value ? ThemeMode.dark : ThemeMode.light,
             darkTheme: ThemeData.dark(),
