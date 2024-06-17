@@ -34,12 +34,13 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  List<String> intervals = [];
+  String pointsString = '';
   double gapLength = 0;
 
   void _calculatePoints() {
     setState(() {
-      intervals.clear();
+      double point = 0;
+      pointsString = '';
 
       double totalLength = double.parse(totalLengthController.text);
       double weldingLength = double.parse(weldingLengthController.text);
@@ -47,11 +48,25 @@ class _HomePageState extends State<HomePage> {
 
       gapLength =
           (totalLength - (weldingLength * weldingCount)) / (weldingCount - 1);
-      double initialLength = 0;
-      for (var i = 0; i < weldingCount; i++) {
-        intervals.add(
-            '${initialLength.toStringAsFixed(2)} ~ ${(initialLength + weldingLength).toStringAsFixed(2)}');
-        initialLength = initialLength + weldingLength + gapLength;
+
+      if (gapLength == 0) {
+        pointsString = '0';
+        for (var i = 0; i < weldingCount; i++) {
+          pointsString += ', ${(point + weldingLength).toStringAsFixed(2)}';
+
+          point = point + weldingLength + gapLength;
+        }
+      } else {
+        for (var i = 0; i < weldingCount; i++) {
+          pointsString += (point).toStringAsFixed(2);
+          if (i == weldingCount - 1) {
+            pointsString += ', ${(point + weldingLength).toStringAsFixed(2)}';
+          } else {
+            pointsString += ', ${(point + weldingLength).toStringAsFixed(2)}, ';
+          }
+
+          point = point + weldingLength + gapLength;
+        }
       }
     });
   }
@@ -196,44 +211,28 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: const Text('계산하기'),
                 ),
-                const SizedBox(height: 30),
-                // if (intervals.isNotEmpty && gapLength >= 0)
+                if (pointsString.isNotEmpty && gapLength >= 0)
                   Expanded(
-                    child: ListView.separated(
-                      itemBuilder: (itemBuilderContext, index) {
-                        final item = intervals[index];
-                        return Builder(
-                          builder: (context) {
-                            return Text(
-                              item,
-                              // key: Key(item),
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.titleLarge,
-                              overflow: TextOverflow.ellipsis,
-                            );
-                          }
-                        );
-                      },
-                      separatorBuilder: (context2, index) {
-                        print('분리빌더');
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 30),
+                        child: Column(
                           children: [
-                            const Divider(),
                             Text(
-                              textAlign: TextAlign.center,
-                              '+ ${gapLength.toStringAsFixed(2)}',
-                              style: Theme.of(context2)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: Colors.grey),
-                              overflow: TextOverflow.ellipsis,
+                              '간격 : ${gapLength.toStringAsFixed(2)} mm',
+                              style: const TextStyle(
+                                  fontSize: 21, fontWeight: FontWeight.w600),
                             ),
-                            const Divider(),
+                            const SizedBox(height: 30),
+                            Text(
+                              pointsString.substring(
+                                  0, pointsString.length - 1),
+                              style: const TextStyle(
+                                  fontSize: 21, fontWeight: FontWeight.w600),
+                            ),
                           ],
-                        );
-                      },
-                      itemCount: intervals.length,
+                        ),
+                      ),
                     ),
                   )
               ],
